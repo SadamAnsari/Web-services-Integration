@@ -1,0 +1,40 @@
+                   Readme for Ticketing system integration package with CRE
+
+                         Version 1.0.0
+
+Introduction
+	Integration package is an interface to connect to third party ticketing system 
+	to add/update a ticket for incident raised by co-relation engine.
+	The module will be running on the SimOne provider machine.
+
+System Requirements
+	Python 2.7 and above
+	Linux operating system
+
+Installation
+	The Integration module is bundled as a package and do not need installation. 
+	
+	Follow below steps to configure integration module:
+	
+	* Extract the module to a location
+	* Add provider settings to config.csv file present at root level
+	* Below are provider configuration parameters.
+		- server : web url of web service i.e. http://ssdemo.blackstratus.com/nfservlets/servlet/nFXService
+		- user : user name having access to all cases on given server 
+		- password : password of the given user
+		- log_level : logging level. It could be debug, info, warning, error, critical, fatal.
+		- cusotmer_mapping : custommer mapping file path. If nothing provided then customer.csv
+		  will be created at root level
+Usage
+	The package has three diffrent files developed for specific tasks.
+	1. main.py -i <<case id>> - The file will be spawned whenever there is a new 
+	   incident created by CRE. Multiple instance of file can run simultaneously for
+	   different case id.
+	2. bootstrap.py - This is customer on-boarding script. The script will ask for details about
+	   and based on it information provided, customer.csv file will be updated.
+	3. cron.py - The file will be called by cron job.
+	   3.1 Running cron.py without any argument will read the exising queue and re-submit 
+	       pending cases to ticketing system. 
+	   3.2 Running cron.py --export will export the current queue statistics to CSV file.
+	       The file will get saved under data/export directory. 
+	   
